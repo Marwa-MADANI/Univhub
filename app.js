@@ -9,6 +9,7 @@ const path = require("path");
 const AppError = require("./utils/appError");
 const cors = require("cors");
 const compression = require("compression");
+const cookieParser = require("cookie-parser");
 
 ////////////// Environement variables ////////////////
 dotenv.config({ path: "./config.env" });
@@ -16,8 +17,16 @@ dotenv.config({ path: "./config.env" });
 ////////////// Initialisation Server Express ////////////////
 app = express();
 
+////////////// Cookies Parser ////////////////
+app.use(cookieParser());
+
 ////////////// Cors ////////////////
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5502", // Replace this with your client's origin
+    credentials: true,
+  })
+);
 
 ////////////// Body parser: reading data from body ////////////////
 app.use(express.json());

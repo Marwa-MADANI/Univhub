@@ -82,6 +82,20 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: String,
 
   passwordResetExpires: Date,
+
+  signalements: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Signalement",
+    },
+  ],
+
+  annonces: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Annonce",
+    },
+  ],
 });
 
 ////////////// Hash password before saving ////////////////
@@ -149,6 +163,34 @@ userSchema.methods.createAccountActivateToken = function () {
   this.accountActivationTokenExpires = Date.now() + 24 * 60 * 60 * 1000;
 
   return activationToken;
+};
+
+////////////// Adding signalement ////////////////
+userSchema.statics.addSignalement = async function (userId, signalementId) {
+  await this.findByIdAndUpdate(userId, {
+    $push: { signalements: signalementId },
+  });
+};
+
+////////////// Deleting signalement ////////////////
+userSchema.statics.removeSignalement = async function (userId, signalementId) {
+  await this.findByIdAndUpdate(userId, {
+    $pull: { signalements: signalementId },
+  });
+};
+
+////////////// Adding annonce ////////////////
+userSchema.statics.addAnnonce = async function (userId, annonceId) {
+  await this.findByIdAndUpdate(userId, {
+    $push: { annonces: annonceId },
+  });
+};
+
+////////////// Deleting annonce ////////////////
+userSchema.statics.removeAnnonce = async function (userId, annonceId) {
+  await this.findByIdAndUpdate(userId, {
+    $pull: { annonces: annonceId },
+  });
 };
 
 const user = new mongoose.model("User", userSchema);

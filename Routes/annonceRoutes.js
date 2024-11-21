@@ -10,9 +10,10 @@ router
   .get(annonceContoller.getAnnonces)
   .post(annonceContoller.createAnnonce);
 
+router.route("/:title").get(annonceContoller.getAnnonce);
+
 router
   .route("/:_id")
-  .get(annonceContoller.getAnnonce)
   .patch(annonceContoller.updateAnnonce)
   .delete(annonceContoller.deleteAnnonce);
 

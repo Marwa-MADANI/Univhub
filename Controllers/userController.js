@@ -4,6 +4,7 @@ const AppError = require("../utils//appError");
 const catchAsync = require("../utils//catchAsync");
 const multer = require("multer");
 const sharp = require("sharp");
+const Email = require("../utils/email");
 
 /////////////// Store pictures in memory and not in disk ////////////////
 const multerStorage = multer.memoryStorage();
@@ -21,7 +22,10 @@ const multerFilter = (request, file, callbackFunction) => {
 };
 
 ///////////////// Config multer where and what to upload ////////////////
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 ///////////////// Upload this single field (picture) ////////////////
 exports.uploadUserPhoto = upload.single("photo");
@@ -50,7 +54,7 @@ const filterObj = (object, ...allowedFields) => {
 };
 
 ///////////////// READ ////////////////
-exports.getUser = factory.getOne(User, null);
+exports.getUser = factory.getOne(User, ["signalements", "annonces"]);
 
 exports.getAllUsers = factory.getAll(User);
 
@@ -74,5 +78,14 @@ exports.deleteMe = catchAsync(async (request, response, next) => {
   response.status(200).json({
     status: "success",
     data: "Account deleted successfully!",
+  });
+});
+
+exports.contact = catchAsync(async (request, response, next) => {
+  new Email(request.body, "univhub.dz").sendContact();
+
+  response.status(200).json({
+    status: "success",
+    message: "email sent...",
   });
 });

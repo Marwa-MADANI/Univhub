@@ -6,6 +6,7 @@ module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
     this.nom = user.nom;
+    this.message = user.message;
     this.url = url;
     this.from = `"univ" <${process.env.EMAIL_FROM}>`;
   }
@@ -45,6 +46,8 @@ module.exports = class Email {
       {
         nom: this.nom,
         url: this.url,
+        message: this.message,
+        email: this.to,
         subject,
       }
     );
@@ -70,5 +73,9 @@ module.exports = class Email {
       "passwordReset",
       "Your password reset token (valid for only 10 minutes)"
     );
+  }
+
+  async sendContact() {
+    await this.send("contact", "Contact us");
   }
 };

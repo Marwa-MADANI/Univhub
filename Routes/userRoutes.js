@@ -11,6 +11,7 @@ router.route("/activateAccount/:token").patch(authController.accountActivation);
 router.route("/login").post(authController.login);
 router.route("/forgotPassword").post(authController.forgotPassword);
 router.route("/resetPassword/:token").patch(authController.resetPassword);
+router.route("/contact").post(userController.contact);
 
 router.use(authController.protect);
 

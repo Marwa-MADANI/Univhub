@@ -4,7 +4,7 @@
   "description": "gestion des pannes et les annonces dans un établissement",
   "main": "app.js",
   "scripts": {
-    "server:dev": "NODE_ENV=dev nodemon server.js",
+    "server:dev": "nodemon server.js",
     "server:prod": "NODE_ENV=prod nodemon server.js"
   },
   "author": "Marwa Madani",
@@ -12,6 +12,7 @@
   "devDependencies": {
     "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

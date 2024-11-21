@@ -10,9 +10,9 @@ router
   .get(signalementContoller.getSignalements)
   .post(signalementContoller.createSignalement);
 
+router.route("/:title").get(signalementContoller.getSignalement);
 router
   .route("/:_id")
-  .get(signalementContoller.getSignalement)
   .patch(signalementContoller.updateSignalement)
   .delete(signalementContoller.deleteSignalement);
 

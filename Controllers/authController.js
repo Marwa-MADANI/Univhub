@@ -24,11 +24,11 @@ const createSendToken = (user, statusCode, response) => {
 
   // 2) store token into cookies
   response.cookie("jwt", token, {
-    expiresIn: new Date(
+    expires: new Date(
       Date.now() +
         Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000
     ),
-    secure: true, //the cookie will be send with an encrypted connection (HTTPS)
+    secure: false, //the cookie will be send with an encrypted connection (HTTPS)
     httpOnly: true, //use only http secure protocol
   });
 
@@ -119,7 +119,7 @@ exports.login = catchAsync(async (request, response, next) => {
 });
 
 ////////////// Log out ////////////////
-exports.logout = (reqest, response) => {
+exports.logout = (request, response) => {
   response.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
